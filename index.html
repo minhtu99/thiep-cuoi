@@ -3,175 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lời Mời Đặc Biệt</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>Thiệp Hồng | Minh Tú & Đỗ Linh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@700&family=Great+Vibes&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #c19a6b;
-            --accent: #e63946;
-            --bg: #fff5f5;
+            --primary: #A67B5B; 
+            --accent: #D95D5D; 
+            --bg: #FDFBF8; 
+            --text: #4A4A4A;
+            --serif-font: 'Cormorant Garamond', serif;
+            --script-font: 'Great Vibes', cursive;
         }
 
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
             font-family: 'Quicksand', sans-serif;
             background-color: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
             scroll-behavior: smooth;
+            line-height: 1.6;
         }
 
-        /* --- Màn hình bao thư (Tạo sự tò mò) --- */
+        h1, h2, h3 { font-weight: normal; }
+
+        /* --- 1. MÀN HÌNH CHỜ --- */
         #envelope-wrapper {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #2b2d42;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: transform 1s ease-in-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #2c1a1d 0%, #4a192c 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1000; transition: opacity 0.8s ease-out, transform 0.8s ease-in;
         }
-
+        .envelope-container { position: relative; cursor: pointer; animation: float 3s ease-in-out infinite; }
         .envelope {
-            width: 280px; height: 180px;
-            background: #d90429;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-radius: 0 0 10px 10px;
+            width: 300px; height: 200px; background: #c62828; position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-radius: 0 0 10px 10px;
+            display: flex; justify-content: center; align-items: center;
         }
-
         .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            border-left: 140px solid transparent;
-            border-right: 140px solid transparent;
-            border-top: 100px solid #ef233c;
-            transform-origin: top;
-            transition: all 0.5s;
+            content: ''; position: absolute; top: 0; left: 0;
+            border-left: 150px solid transparent; border-right: 150px solid transparent;
+            border-top: 110px solid #e53935; transform-origin: top; z-index: 2;
         }
+        .heart-btn {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #fff; width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 30px;
+            animation: pulse-white 2s infinite; z-index: 5; color: var(--accent);
+        }
+        @keyframes pulse-white {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .instruction { color: rgba(255,255,255,0.9); margin-top: 40px; font-size: 1.1rem; letter-spacing: 1px; animation: fadeIn 2s infinite alternate; }
 
-        .heart {
-            position: absolute;
-            top: 40%; left: 50%;
-            transform: translate(-50%, -50%);
-            color: white; font-size: 30px;
-            animation: beat 1s infinite;
-        }
-
-        @keyframes beat {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.2); }
-        }
-
-        .instruction {
-            color: white; margin-top: 30px;
-            font-style: italic; letter-spacing: 2px;
-        }
-
-        /* --- Nội dung chính (Ẩn lúc đầu) --- */
-        #main-content {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
+        /* --- 2. NỘI DUNG CHÍNH --- */
+        #main-content { display: none; text-align: center; opacity: 0; transition: opacity 1s ease-in; }
 
         header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: linear-gradient(rgba(255,245,245,0.8), rgba(255,245,245,0.8)), 
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000') no-repeat center;
-            background-size: cover;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1920') no-repeat center center;
+            background-size: cover; background-attachment: fixed; color: white;
         }
-
-        h1 { font-family: 'Great Vibes', cursive; font-size: 4rem; color: var(--accent); margin: 0; }
+        h1 { font-family: var(--script-font); font-size: 6rem; margin: 10px 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); animation: slideDown 1.5s ease-out; }
+        .wedding-title { font-family: var(--serif-font); letter-spacing: 3px; text-transform: uppercase; font-size: 1.2rem; animation: fadeIn 2s ease-in; }
         
-        /* --- Countdown --- */
-        .countdown-container {
-            display: flex; justify-content: center; gap: 15px; margin: 30px 0;
-        }
+        .countdown-container { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
         .time-box {
-            background: white; padding: 10px; min-width: 60px;
-            border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.2); padding: 15px 25px; 
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 8px; backdrop-filter: blur(10px);
         }
-        .time-box span { display: block; font-weight: bold; font-size: 1.5rem; color: var(--accent); }
+        .time-box span { display: block; font-family: var(--serif-font); font-weight: 600; font-size: 2.5rem; }
+        .time-box label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- Story Section --- */
-        .section { padding: 80px 20px; max-width: 800px; margin: auto; }
-        .story-box { background: white; padding: 30px; border-radius: 20px; border-left: 5px solid var(--accent); }
+        /* --- LOGIC HIỆU ỨNG THÔNG MINH --- */
+        .reveal-item { opacity: 0; transition: all 1s ease-out; }
+        .reveal-item.hidden-below { transform: translateY(70px); }
+        .reveal-item.hidden-above { transform: translateY(-70px); }
+        .reveal-item.active { opacity: 1; transform: translateY(0); }
 
-        /* --- QR Section --- */
-        .qr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
-        .qr-item img { width: 100%; max-width: 150px; border: 4px solid white; border-radius: 10px; }
+        .section { padding: 80px 20px; }
+        .section-title { font-family: var(--script-font); font-size: 3.5rem; color: var(--accent); margin-bottom: 30px; }
 
-        /* --- Hiệu ứng cánh hoa bay --- */
-        .leaf { position: fixed; top: -10%; z-index: 999; pointer-events: none; animation: fall 5s linear infinite; }
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); left: calc(var(--x) + 20%); }
+        .invitation-banner {
+            position: relative; padding: 120px 20px;
+            background: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920') no-repeat center center;
+            background-size: cover; background-attachment: fixed; color: white; text-align: center;
+        }
+        .invitation-banner::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(44, 26, 29, 0.7); }
+        .banner-content { position: relative; z-index: 2; max-width: 700px; margin: auto; }
+        .banner-content h3 { font-family: var(--serif-font); font-size: 2.5rem; font-style: italic; margin-bottom: 20px; }
+        .banner-content p { font-size: 1.3rem; line-height: 1.8; }
+
+        /* --- CSS CHO ẢNH VÀ VIDEO --- */
+        .chibi-section { text-align: center; padding: 40px 20px; }
+        
+        /* CSS dùng chung cho cả Ảnh và Video ở phần Mời Cưới */
+        .chibi-large { 
+            max-width: 450px; 
+            width: 100%;
+            height: auto; 
+            margin: 20px auto; 
+            display: block; 
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+            border-radius: 15px;
+            /* Nếu là video thì thêm dòng này để crop đẹp */
+            object-fit: cover; 
+        }
+        
+        .chibi-footer { max-width: 250px; height: auto; margin: 0 auto 30px auto; display: block; }
+
+        .location-box { background: white; padding: 40px; max-width: 800px; margin: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+        .location-decor-img { position: absolute; top: 0; right: 0; width: 150px; opacity: 0.2; pointer-events: none; }
+        .map-btn { display: inline-block; margin-top: 25px; padding: 12px 35px; background: var(--accent); color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: all 0.3s; letter-spacing: 1px;}
+        .map-btn:hover { background: #c62828; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(217, 93, 93, 0.4); }
+
+        /* --- CSS CHO PHẦN VIDEO CUỐI TRANG --- */
+        .qr-section { background: #fff5f5; }
+        .qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 40px; max-width: 900px; margin: auto; text-align: center;}
+        
+        .qr-item { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        
+        .qr-video {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            aspect-ratio: 9/16; 
+            object-fit: cover;
+            max-height: 500px;
+            border: 1px solid #eee;
+        }
+
+        .leaf { position: fixed; top: -10%; z-index: 999; pointer-events: none; animation: fall linear infinite; opacity: 0.7; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); left: calc(var(--x) + 10%); } }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 4rem; }
+            .countdown-container { gap: 8px; }
+            .time-box { padding: 10px 15px; }
+            .chibi-large { max-width: 85%; }
         }
     </style>
 </head>
 <body>
 
     <div id="envelope-wrapper" onclick="openEnvelope()">
-        <div class="envelope">
-            <div class="heart">❤️</div>
+        <div class="envelope-container">
+            <div class="envelope">
+                <div class="heart-btn">❤️</div>
+            </div>
         </div>
-        <p class="instruction">Chạm vào trái tim để mở lời mời nào...</p>
+        <p class="instruction">Bạn có một lời mời trân trọng...</p>
     </div>
 
     <div id="main-content">
         <header>
-            <p style="letter-spacing: 5px;">SAVE THE DATE</p>
+            <p class="wedding-title">The Wedding Of</p>
             <h1>Minh Tú & Đỗ Linh</h1>
-            <p>Chúng mình sắp về chung một nhà!</p>
+            <p style="font-family: var(--serif-font); font-size: 1.5rem; font-style: italic; margin-top: 10px;">"Trăm năm tình viên mãn"</p>
             
             <div class="countdown-container" id="countdown">
-                <div class="time-box"><span id="days">00</span>Ngày</div>
-                <div class="time-box"><span id="hours">00</span>Giờ</div>
-                <div class="time-box"><span id="mins">00</span>Phút</div>
+                <div class="time-box"><span id="days">00</span><label>Ngày</label></div>
+                <div class="time-box"><span id="hours">00</span><label>Giờ</label></div>
+                <div class="time-box"><span id="mins">00</span><label>Phút</label></div>
+                <div class="time-box"><span id="secs">00</span><label>Giây</label></div>
             </div>
+            <p style="font-size: 1.1rem; margin-top: 20px;">Chờ đón khoảnh khắc: 10:10 - 15/03/2026</p>
         </header>
 
-        <section class="section">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Câu chuyện tình yêu</h2>
-            <div class="story-box">
-                <p>Từ những người lạ mặt trên con phố quen, đến cái nắm tay đầu tiên dưới cơn mưa rào... Sau 1,500 ngày gắn bó, chúng mình đã quyết định viết tiếp chương mới của cuộc đời.</p>
+        <section class="section chibi-section">
+             <div class="reveal-item hidden-below">
+                <video class="chibi-large" autoplay loop muted playsinline>
+                    <source src="Video_Moi_cuoi.mp4" type="video/mp4">
+                </video>
+             </div>
+        </section>
+
+        <section class="invitation-banner">
+            <div class="banner-content">
+                <h3 class="reveal-item hidden-below">Trân trọng kính mời</h3>
+                <div class="reveal-item hidden-below">
+                    <p style="font-family: var(--serif-font);">
+                        Gia đình chúng tôi và hai con<br>
+                        <strong style="font-size: 1.8rem; color: #ffcccb;">Minh Tú & Đỗ Linh</strong><br><br>
+                        Vô cùng vinh hạnh được đón tiếp Quý vị tới tham dự bữa tiệc rượu chung vui cùng gia đình trong ngày trọng đại này.
+                    </p>
+                </div>
+                <p class="reveal-item hidden-below" style="margin-top: 20px; font-size: 1.1rem; font-style: italic;">Sự hiện diện của Quý vị là niềm hạnh phúc và lời chúc phúc quý giá nhất dành cho chúng tôi.</p>
             </div>
         </section>
 
         <section class="section" style="background: #fff;">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Thời gian & Địa điểm</h2>
-            <div style="font-size: 1.2rem; line-height: 2;">
-                <p><strong>LỄ THÀNH HÔN</strong></p>
-                <p>Vào lúc 10:10 AM - Thứ Bảy</p>
-                <p>Ngày 14 tháng 03 năm 2026</p>
-                <p><strong>Tại:</strong> Nhà Trai - Xóm Văn Vũ - Xã Cổ Đô - Thành Phố Hà Nội</p>
-                <a href="https://maps.google.com" target="_blank" style="color: var(--accent); text-decoration: none;">📍 Xem bản đồ đường đi</a>
+            <div class="location-box reveal-item hidden-below">
+                <img src="https://cdn-icons-png.flaticon.com/512/2913/2913564.png" class="location-decor-img" alt="decor">
+                
+                <h2 class="section-title">Thời gian & Địa điểm</h2>
+                <div style="font-size: 1.15rem; line-height: 2;">
+                    <p style="font-family: var(--serif-font); font-size: 1.6rem; color: var(--accent); font-weight: bold; margin-bottom: 5px;">LỄ THÀNH HÔN</p>
+                    <p style="font-weight: bold;">10:10 AM | Chủ Nhật</p>
+                    <p style="font-size: 1.3rem;">Ngày 15 Tháng 03 Năm 2026</p> 
+                    
+                    <hr style="width: 60px; border: 1px solid var(--primary); margin: 30px auto; opacity: 0.5;">
+                    
+                    <p style="font-family: var(--serif-font); font-size: 1.4rem; color: var(--primary); font-weight: bold;">TẠI TƯ GIA NHÀ TRAI</p>
+                    <p>Xóm Văn Vũ - Xã Cổ Đô - Thành Phố Hà Nội</p>
+                    <p style="font-style: italic; font-size: 0.9rem; color: #666;">(Rất mong quý khách sắp xếp thời gian tới chung vui)</p>
+                    
+                    <a href="https://maps.app.goo.gl/vvKDMnk4YaXJU576A" target="_blank" class="map-btn">
+                        📍 Dẫn đường đến đám cưới
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="section">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Mừng cưới & Phản hồi</h2>
-            <p>Sự hiện diện của bạn là món quà lớn nhất. Nếu bạn muốn gửi lời chúc xa:</p>
+        <section class="section qr-section">
+            <h2 class="section-title reveal-item hidden-below" style="font-size: 2.5rem;">Gửi Lời Chúc & Quà Mừng</h2>
+            <p class="reveal-item hidden-below" style="max-width: 600px; margin: auto; font-family: var(--serif-font); margin-bottom: 30px;">Nếu khoảng cách địa lý ngăn trở bạn tới tham dự, bạn vẫn có thể gửi gắm tình cảm tới chúng mình qua hộp thư này nhé!</p>
+            
             <div class="qr-grid">
-                <div class="qr-item">
-                    <p>Mừng chú rể</p>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=CHURE" alt="QR Chú Rể">
+                <div class="qr-item reveal-item hidden-below">
+                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.5rem; margin-bottom: 15px;">Chú Rể</p>
+                    <video class="qr-video" autoplay loop muted playsinline>
+                        <source src="Video_Chú_Rể.mp4" type="video/mp4">
+                    </video>
                 </div>
-                <div class="qr-item">
-                    <p>Mừng cô dâu</p>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=CODAU" alt="QR Cô Dâu">
+
+                <div class="qr-item reveal-item hidden-below">
+                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.5rem; margin-bottom: 15px;">Cô Dâu</p>
+                    <video class="qr-video" autoplay loop muted playsinline>
+                        <source src="Video_Cô_Dâu.mp4" type="video/mp4">
+                    </video>
                 </div>
             </div>
         </section>
 
-        <footer style="padding: 40px; color: #999;">
-            <p>Cảm ơn bạn đã là một phần trong cuộc đời chúng mình!</p>
+        <footer style="padding: 80px 20px; background: #2c1a1d; color: #e0e0e0; margin-top: 0px; text-align: center;">
+            <div class="reveal-item hidden-below">
+                <img src="https://placehold.co/300x200/2c1a1d/e0e0e0?text=Ảnh+Chibi+Cảm+Ơn" alt="Chibi Thank You" class="chibi-footer">
+                <h2 style="font-family: var(--script-font); font-size: 4rem; color: var(--accent); margin: 0;">Thank You!</h2>
+                <p style="font-family: var(--serif-font); font-size: 1.2rem; margin-top: 20px;">Minh Tú & Đỗ Linh rất hạnh phúc khi có sự hiện diện của bạn.</p>
+            </div>
         </footer>
     </div>
 
@@ -181,39 +265,77 @@
 
     <script>
         function openEnvelope() {
-            // Hiệu ứng mở bao thư
-            document.getElementById('envelope-wrapper').style.transform = 'translateY(-100%)';
-            document.getElementById('main-content').style.display = 'block';
+            const wrapper = document.getElementById('envelope-wrapper');
+            wrapper.style.transform = 'scale(2)';
+            wrapper.style.opacity = '0';
             
-            // Phát nhạc
+            setTimeout(() => {
+                wrapper.style.display = 'none';
+                const mainContent = document.getElementById('main-content');
+                mainContent.style.display = 'block';
+                void mainContent.offsetWidth; 
+                mainContent.style.opacity = '1';
+                initSmartScrollReveal();
+            }, 800);
+            
             const music = document.getElementById('bgMusic');
-            music.play().catch(e => console.log("Cần tương tác để phát nhạc"));
-
-            // Tạo hoa rơi
-            setInterval(createLeaf, 300);
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Cần tương tác người dùng để phát nhạc"));
+            setInterval(createLeaf, 250);
         }
 
-        // Countdown Logic
-        const targetDate = new Date("Oct 20, 2025 11:00:00").getTime();
-        setInterval(() => {
+        function initSmartScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                        if (entry.boundingClientRect.top > 0) {
+                            entry.target.classList.add('hidden-below');
+                            entry.target.classList.remove('hidden-above');
+                        } else {
+                            entry.target.classList.add('hidden-above');
+                            entry.target.classList.remove('hidden-below');
+                        }
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.reveal-item').forEach(el => { observer.observe(el); });
+        }
+
+        const targetDate = new Date("2026-03-15T10:10:00").getTime();
+        const timer = setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
-            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            if (diff < 0) {
+                clearInterval(timer);
+                document.getElementById('countdown').innerHTML = "<h3 style='font-family: var(--script-font); font-size:3rem; color: var(--accent)'>Just Married! ❤️</h3>";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('days').innerText = days < 10 ? "0" + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById('mins').innerText = mins < 10 ? "0" + mins : mins;
+            document.getElementById('secs').innerText = secs < 10 ? "0" + secs : secs;
         }, 1000);
 
-        // Hiệu ứng cánh hoa
+        const icons = ['🌸', '❤️', '✨', '🌿', '🤍'];
         function createLeaf() {
             const leaf = document.createElement('div');
-            leaf.innerHTML = '🌸';
+            leaf.innerHTML = icons[Math.floor(Math.random() * icons.length)];
             leaf.className = 'leaf';
             leaf.style.left = Math.random() * 100 + 'vw';
             leaf.style.setProperty('--x', (Math.random() * 20 - 10) + 'vw');
-            leaf.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            leaf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            const size = Math.random() * 15 + 10;
+            leaf.style.fontSize = size + 'px';
+            leaf.style.animationDuration = (Math.random() * 3 + 4) + 's';
             document.body.appendChild(leaf);
-            setTimeout(() => leaf.remove(), 5000);
+            setTimeout(() => leaf.remove(), 7000);
         }
     </script>
 </body>
