@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thiệp Hồng | Minh Tú & Đỗ Linh</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@700&family=Great+Vibes&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #A67B5B; 
@@ -12,7 +12,8 @@
             --bg: #FDFBF8; 
             --text: #4A4A4A;
             --serif-font: 'Cormorant Garamond', serif;
-            --script-font: 'Great Vibes', cursive;
+            /* Font chữ mềm mại, hiện đại hơn */
+            --script-font: 'Dancing Script', cursive; 
         }
 
         body, html {
@@ -68,7 +69,35 @@
                         url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1920') no-repeat center center;
             background-size: cover; background-attachment: fixed; color: white;
         }
-        h1 { font-family: var(--script-font); font-size: 6rem; margin: 10px 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); animation: slideDown 1.5s ease-out; }
+        
+        h1 { 
+            font-family: var(--script-font); 
+            font-size: 6rem; /* Kích thước vừa phải cho font Dancing Script */
+            margin: 15px 0; 
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3); 
+            animation: slideDown 1.5s ease-out;
+            line-height: 1.2;
+            font-weight: 700; /* Font này đậm hơn một chút cho rõ nét */
+        }
+        
+        /* CSS CHO TRÁI TIM Ở GIỮA */
+        .heart-icon {
+            color: #ff6b6b;
+            display: inline-block;
+            font-size: 4rem; 
+            vertical-align: middle;
+            margin: 0 10px;
+            animation: heartBeat 1.2s infinite; 
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
         .wedding-title { font-family: var(--serif-font); letter-spacing: 3px; text-transform: uppercase; font-size: 1.2rem; animation: fadeIn 2s ease-in; }
         
         .countdown-container { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
@@ -86,7 +115,7 @@
         .reveal-item.active { opacity: 1; transform: translateY(0); }
 
         .section { padding: 80px 20px; }
-        .section-title { font-family: var(--script-font); font-size: 3.5rem; color: var(--accent); margin-bottom: 30px; }
+        .section-title { font-family: var(--script-font); font-size: 3.5rem; color: var(--accent); margin-bottom: 30px; font-weight: 700; }
 
         .invitation-banner {
             position: relative; padding: 120px 20px;
@@ -101,7 +130,6 @@
         /* --- CSS CHO ẢNH VÀ VIDEO --- */
         .chibi-section { text-align: center; padding: 40px 20px; }
         
-        /* CSS dùng chung cho cả Ảnh và Video ở phần Mời Cưới */
         .chibi-large { 
             max-width: 450px; 
             width: 100%;
@@ -110,11 +138,20 @@
             display: block; 
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
             border-radius: 15px;
-            /* Nếu là video thì thêm dòng này để crop đẹp */
             object-fit: cover; 
         }
         
-        .chibi-footer { max-width: 250px; height: auto; margin: 0 auto 30px auto; display: block; }
+        /* CSS cho video cảm ơn cuối trang */
+        .video-thank-you {
+            max-width: 450px; /* Kích thước vừa phải */
+            width: 100%;
+            height: auto;
+            margin: 0 auto 30px auto;
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+            object-fit: cover;
+        }
 
         .location-box { background: white; padding: 40px; max-width: 800px; margin: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
         .location-decor-img { position: absolute; top: 0; right: 0; width: 150px; opacity: 0.2; pointer-events: none; }
@@ -152,9 +189,11 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 4rem; }
+            .heart-icon { font-size: 2.5rem; }
             .countdown-container { gap: 8px; }
             .time-box { padding: 10px 15px; }
             .chibi-large { max-width: 85%; }
+            .video-thank-you { max-width: 90%; }
         }
     </style>
 </head>
@@ -172,7 +211,7 @@
     <div id="main-content">
         <header>
             <p class="wedding-title">The Wedding Of</p>
-            <h1>Minh Tú & Đỗ Linh</h1>
+            <h1>Minh Tú <span class="heart-icon">❤</span> Đỗ Linh</h1>
             <p style="font-family: var(--serif-font); font-size: 1.5rem; font-style: italic; margin-top: 10px;">"Trăm năm tình viên mãn"</p>
             
             <div class="countdown-container" id="countdown">
@@ -252,7 +291,9 @@
 
         <footer style="padding: 80px 20px; background: #2c1a1d; color: #e0e0e0; margin-top: 0px; text-align: center;">
             <div class="reveal-item hidden-below">
-                <img src="https://placehold.co/300x200/2c1a1d/e0e0e0?text=Ảnh+Chibi+Cảm+Ơn" alt="Chibi Thank You" class="chibi-footer">
+                <video class="video-thank-you" autoplay loop muted playsinline>
+                    <source src="Video_Cam_on.mp4" type="video/mp4">
+                </video>
                 <h2 style="font-family: var(--script-font); font-size: 4rem; color: var(--accent); margin: 0;">Thank You!</h2>
                 <p style="font-family: var(--serif-font); font-size: 1.2rem; margin-top: 20px;">Minh Tú & Đỗ Linh rất hạnh phúc khi có sự hiện diện của bạn.</p>
             </div>
@@ -260,7 +301,7 @@
     </div>
 
     <audio id="bgMusic" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+        <source src="Co_Minh_Va_Ta.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -279,6 +320,7 @@
             }, 800);
             
             const music = document.getElementById('bgMusic');
+            music.currentTime = 213; 
             music.volume = 0.5;
             music.play().catch(e => console.log("Cần tương tác người dùng để phát nhạc"));
             setInterval(createLeaf, 250);
