@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Thiệp Hồng | Minh Tú & Đỗ Linh</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #A67B5B; 
             --accent: #D95D5D; 
             --bg: #FDFBF8; 
             --text: #4A4A4A;
+            
+            /* Màu vàng kim loại */
+            --gold-light: #FBF5B7;
+            --gold-main: #BF953F;
+            --gold-dark: #8C6D2C;
+            --bg-silk: url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1080&auto=format&fit=crop'); 
+
             --serif-font: 'Cormorant Garamond', serif;
             --script-font: 'Pinyon Script', cursive; 
+            --vibes-font: 'Great Vibes', cursive;
         }
 
         body, html {
@@ -20,16 +30,16 @@
             font-family: 'Quicksand', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            overflow-x: hidden; /* Ngăn cuộn ngang */
+            overflow-x: hidden;
             scroll-behavior: smooth;
             line-height: 1.6;
-            -webkit-tap-highlight-color: transparent; /* Bỏ highlight khi chạm trên mobile */
+            -webkit-tap-highlight-color: transparent;
         }
 
         h1, h2, h3 { font-weight: normal; margin: 0; }
         img, video { max-width: 100%; height: auto; display: block; }
 
-        /* --- 1. MÀN HÌNH CHỜ (ENVELOPE) --- */
+        /* --- 1. MÀN HÌNH CHỜ --- */
         #envelope-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #2c1a1d 0%, #4a192c 100%);
@@ -43,12 +53,10 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-radius: 0 0 10px 10px;
             display: flex; justify-content: center; align-items: center;
         }
-        /* Tinh chỉnh bao thư nhỏ lại xíu trên màn hình bé */
         @media (max-width: 350px) {
             .envelope { width: 260px; height: 173px; }
             .envelope::before { border-left-width: 130px; border-right-width: 130px; border-top-width: 95px; }
         }
-
         .envelope::before {
             content: ''; position: absolute; top: 0; left: 0;
             border-left: 150px solid transparent; border-right: 150px solid transparent;
@@ -61,7 +69,6 @@
             animation: pulse-white 2s infinite; z-index: 5; color: var(--accent);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        
         @keyframes pulse-white {
             0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
             70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
@@ -73,36 +80,33 @@
         /* --- 2. NỘI DUNG CHÍNH --- */
         #main-content { display: none; text-align: center; opacity: 0; transition: opacity 1s ease-in; width: 100%; overflow: hidden; }
 
+        /* HEADER - ĐÃ SỬA LẠI ĐÚNG TÊN FILE */
         header {
-            min-height: 100vh; /* Fallback */
-            min-height: 100dvh; /* Mobile hiện đại */
+            min-height: 100dvh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
+            /* Thay thế chính xác tại đây: dam_ngo.jpg */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1080&q=80') no-repeat center center;
+                        url('dam_ngo.jpg') no-repeat center center;
             background-size: cover; 
-            background-attachment: fixed; /* Mặc định PC */
+            background-attachment: fixed;
             color: white; padding: 20px; box-sizing: border-box;
         }
-
-        /* Fix lỗi background fixed trên iOS/Mobile */
         @media (hover: none) and (pointer: coarse) {
             header, .invitation-banner { background-attachment: scroll !important; }
         }
         
         h1 { 
             font-family: var(--script-font); 
-            font-size: 7rem; 
+            font-size: 5rem; 
             margin: 10px 0; 
             text-shadow: 2px 2px 8px rgba(0,0,0,0.3); 
             animation: slideDown 1.5s ease-out;
-            line-height: 1.1; font-weight: 400;
+            line-height: 1.2; font-weight: 400;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        
         .heart-icon {
-            color: #ff6b6b; display: inline-block; font-size: 4rem; 
-            vertical-align: middle; margin: 0 10px; animation: heartBeat 1.2s infinite; 
+            color: #ff6b6b; font-size: 3rem; margin: 10px 0; animation: heartBeat 1.2s infinite; display: block;
         }
-
         @keyframes heartBeat {
             0% { transform: scale(1); } 14% { transform: scale(1.3); } 28% { transform: scale(1); }
             42% { transform: scale(1.3); } 70% { transform: scale(1); }
@@ -110,10 +114,7 @@
 
         .wedding-title { font-family: var(--serif-font); letter-spacing: 3px; text-transform: uppercase; font-size: 1.2rem; animation: fadeIn 2s ease-in; margin-top: 20px; }
         
-        /* Countdown Box */
-        .countdown-container { 
-            display: flex; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; 
-        }
+        .countdown-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; }
         .time-box {
             background: rgba(255,255,255,0.2); padding: 10px 20px; min-width: 60px;
             border: 1px solid rgba(255,255,255,0.4); border-radius: 8px; backdrop-filter: blur(5px);
@@ -121,16 +122,13 @@
         .time-box span { display: block; font-family: var(--serif-font); font-weight: 600; font-size: 2rem; line-height: 1;}
         .time-box label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block;}
 
-        /* Hiệu ứng Scroll */
         .reveal-item { opacity: 0; transition: all 0.8s ease-out; }
         .reveal-item.hidden-below { transform: translateY(50px); }
         .reveal-item.hidden-above { transform: translateY(-50px); }
         .reveal-item.active { opacity: 1; transform: translateY(0); }
 
         .section { padding: 60px 20px; }
-        .section-title { font-family: var(--script-font); font-size: 4rem; color: var(--accent); margin-bottom: 20px; font-weight: normal; line-height: 1.2;}
 
-        /* Banner Lời Mời */
         .invitation-banner {
             position: relative; padding: 80px 20px;
             background: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1080') no-repeat center center;
@@ -141,88 +139,107 @@
         .banner-content h3 { font-family: var(--serif-font); font-size: 2.2rem; font-style: italic; margin-bottom: 15px; }
         .banner-content p { font-size: 1.1rem; line-height: 1.7; }
 
-        /* Ảnh & Video */
         .chibi-section { text-align: center; padding: 40px 20px; background: #fff;}
         .chibi-large { 
             max-width: 100%; width: 500px; height: auto; margin: 0 auto; 
             border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .video-thank-you {
-            max-width: 100%; width: 500px; height: auto; margin: 0 auto 20px auto;
-            border-radius: 15px; box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+
+        /* --- CSS CHO PHẦN THỜI GIAN & ĐỊA ĐIỂM --- */
+        .silk-section {
+            position: relative;
+            padding: 80px 15px;
+            background-image: var(--bg-silk);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .silk-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.4); z-index: 1;
+        }
+        .content-wrapper {
+            position: relative; z-index: 2; width: 100%; max-width: 600px;
+            display: flex; flex-direction: column; align-items: center; gap: 40px;
         }
 
-        /* Location Box */
-        .location-box { 
-            background: white; padding: 30px 20px; max-width: 800px; margin: auto; 
-            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            position: relative; overflow: hidden; 
+        .silk-header {
+            font-family: var(--vibes-font);
+            font-size: 4rem;
+            background: linear-gradient(to right, var(--gold-dark), var(--gold-main), var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            text-align: center; line-height: 1.2;
         }
-        .location-decor-img { position: absolute; top: 0; right: 0; width: 100px; opacity: 0.15; pointer-events: none; }
-        .map-btn { 
-            display: inline-block; margin-top: 25px; padding: 12px 30px; 
-            background: var(--accent); color: white; text-decoration: none; 
-            border-radius: 50px; font-weight: bold; transition: all 0.3s; 
-            letter-spacing: 1px; font-size: 0.95rem; box-shadow: 0 5px 15px rgba(217, 93, 93, 0.3);
-        }
-        .map-btn:hover { background: #c62828; transform: translateY(-3px); }
 
-        /* QR Section */
+        .oval-card {
+            position: relative; width: 90%;
+            aspect-ratio: 16/10; 
+            border-radius: 50%;
+            border: 2px solid var(--gold-light);
+            box-shadow: 
+                0 0 0 4px var(--gold-main),
+                0 0 0 6px var(--gold-light),
+                0 10px 30px rgba(139, 69, 19, 0.15),
+                inset 0 0 20px rgba(191, 149, 63, 0.1);
+            background: radial-gradient(ellipse at center, #fffcf5 40%, #fdfbf0 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px 30px; margin-top: 10px;
+        }
+        .oval-card::after {
+            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px dashed var(--gold-main); border-radius: 50%; opacity: 0.6; pointer-events: none;
+        }
+
+        .card-type { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); font-weight: bold; margin-bottom: 5px; }
+        .card-decor-icon { font-size: 1.5rem; color: var(--gold-main); margin-bottom: 10px; }
+        .card-time { font-size: 1.1rem; color: #666; margin-bottom: 15px; font-family: 'Quicksand', sans-serif; font-weight: 500; }
+        .card-location-name { font-size: 1.8rem; color: #8B5E3C; font-weight: 700; margin: 5px 0; text-transform: uppercase; letter-spacing: 1px; font-family: var(--serif-font); }
+        .card-address { font-size: 1rem; color: #777; margin-bottom: 25px; font-family: 'Quicksand', sans-serif; padding: 0 10px; }
+
+        .btn-gold {
+            background: linear-gradient(90deg, #C69320 0%, #FBF5B7 50%, #C69320 100%);
+            background-size: 200% auto;
+            color: white; font-family: 'Quicksand', sans-serif; font-weight: 700;
+            text-decoration: none; padding: 10px 30px; border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(191, 149, 63, 0.4);
+            transition: all 0.3s ease; text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            position: relative; z-index: 5; display: inline-flex; align-items: center; gap: 8px;
+            border: 1px solid #fff; font-size: 0.9rem;
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(191, 149, 63, 0.6); background-position: right center; }
+
         .qr-section { background: #fff5f5; }
-        .qr-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; margin-top: 30px; max-width: 900px; margin-left: auto; margin-right: auto;
-        }
-        .qr-item { 
-            background: white; padding: 15px; border-radius: 20px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
-        }
-        .qr-video {
-            width: 100%; border-radius: 12px; aspect-ratio: 9/16; 
-            object-fit: cover; max-height: 450px; border: 1px solid #f0f0f0;
-        }
+        .qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .qr-item { background: white; padding: 15px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .qr-video { width: 100%; border-radius: 12px; aspect-ratio: 9/16; object-fit: cover; max-height: 450px; border: 1px solid #f0f0f0; }
+        .video-thank-you { max-width: 100%; width: 500px; height: auto; margin: 0 auto 20px auto; border-radius: 15px; box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
 
-        /* Lá rơi */
         .leaf { position: fixed; top: -10%; z-index: 999; pointer-events: none; animation: fall linear infinite; opacity: 0.6; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); left: calc(var(--x) + 20px); } }
         @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- MOBILE RESPONSIVE TWEAKS --- */
         @media (max-width: 768px) {
-            /* Font size */
-            h1 { font-size: 4rem; margin-top: 10px; }
-            .heart-icon { font-size: 2.5rem; margin: 0 5px; }
-            .section-title { font-size: 3rem; }
-            
-            /* Countdown */
+            h1 { font-size: 4rem; }
+            .heart-icon { font-size: 2.5rem; margin: 5px 0; }
             .countdown-container { gap: 10px; }
             .time-box { padding: 8px 12px; min-width: 55px; }
             .time-box span { font-size: 1.5rem; }
-            .time-box label { font-size: 0.65rem; }
-
-            /* Layout padding */
             .section { padding: 50px 15px; }
-            .invitation-banner { padding: 60px 15px; }
-            .location-box { padding: 30px 15px; }
+            .qr-grid { grid-template-columns: 1fr; max-width: 400px; }
             
-            /* Text adjustments */
-            .banner-content h3 { font-size: 1.8rem; }
-            .banner-content p { font-size: 1rem; text-align: justify; text-align-last: center; }
-            
-            /* QR */
-            .qr-grid { grid-template-columns: 1fr; max-width: 400px; } /* 1 cột trên mobile */
-            
-            /* Footer */
-            footer h2 { font-size: 3rem !important; }
-        }
-
-        @media (max-width: 400px) {
-            h1 { font-size: 3.2rem; }
-            .wedding-title { font-size: 0.9rem; letter-spacing: 2px; }
-            .time-box { min-width: 45px; padding: 8px 5px; }
-            .time-box span { font-size: 1.3rem; }
-            .map-btn { width: 80%; text-align: center; }
+            .silk-header { font-size: 3rem; }
+            .oval-card { 
+                width: 95%; padding: 30px 15px;
+                aspect-ratio: auto; min-height: 320px;
+                border-radius: 160px / 120px; 
+            }
+            .oval-card::after { border-radius: 150px / 110px; }
+            .card-location-name { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -240,7 +257,11 @@
     <div id="main-content">
         <header>
             <p class="wedding-title">The Wedding Of</p>
-            <h1>Minh Tú <span class="heart-icon">❤</span> Đỗ Linh</h1>
+            <h1>
+                <span>Minh Tú</span>
+                <span class="heart-icon">❤</span>
+                <span>Đỗ Linh</span>
+            </h1>
             <p style="font-family: var(--serif-font); font-size: 1.2rem; font-style: italic; margin-top: 5px;">"Trăm năm tình viên mãn"</p>
             
             <div class="countdown-container" id="countdown">
@@ -275,42 +296,57 @@
             </div>
         </section>
 
-        <section class="section" style="background: #fff;">
-            <div class="location-box reveal-item hidden-below">
-                <img src="https://cdn-icons-png.flaticon.com/512/2913/2913564.png" class="location-decor-img" alt="decor">
-                
-                <h2 class="section-title">Lễ Thành Hôn</h2>
-                <div style="font-size: 1.1rem; line-height: 1.8;">
+        <section class="silk-section">
+            <div class="silk-overlay"></div>
+            <div class="content-wrapper">
+                <h2 class="silk-header reveal-item hidden-below">Thời gian & Địa điểm</h2>
+
+                <div class="oval-card reveal-item hidden-below">
+                    <div class="card-decor-icon">⚜️</div> 
                     
-                    <div style="background: #fff5f5; padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 20px;">
-                        <p style="font-weight: bold; color: var(--accent); margin-bottom: 0;">10:10 | Chủ Nhật</p>
-                        <p style="font-size: 1.2rem; font-weight: bold; margin-top: 0;">15 / 03 / 2026</p> 
-                    </div>
+                    <p class="card-type">LỄ THÀNH HÔN</p>
+                    <p class="card-time">10:10 | 15/03/2026</p>
+                    <hr style="width: 40px; border: 1px solid var(--gold-main); margin: 10px auto; opacity: 0.5;">
                     
-                    <p style="font-family: var(--serif-font); font-size: 1.3rem; color: var(--primary); font-weight: bold; text-transform: uppercase;">Tư Gia Nhà Trai</p>
-                    <p style="margin-bottom: 5px;">Xóm Văn Vũ - Xã Cổ Đô - TP. Hà Nội</p>
+                    <h3 class="card-location-name">TƯ GIA NHÀ TRAI</h3>
+                    <p class="card-address">Xóm Văn Vũ - Xã Cổ Đô - TP. Hà Nội</p>
                     
-                    <a href="https://maps.google.com/?q=Xóm+Văn+Vũ,+Xã+Cổ+Đô,+Hà+Nội" target="_blank" class="map-btn">
-                        📍 Dẫn đường Google Maps
+                    <a href="https://maps.app.goo.gl/YAYvZB7iDeJTNX8p8" target="_blank" class="btn-gold">
+                        <span>📍</span> Bản đồ Nhà Trai
+                    </a>
+                </div>
+
+                <div class="oval-card reveal-item hidden-below">
+                    <div class="card-decor-icon">⚜️</div>
+                    
+                    <p class="card-type">LỄ VU QUY</p>
+                    <p class="card-time">09:00 | 15/03/2026</p>
+                    <hr style="width: 40px; border: 1px solid var(--gold-main); margin: 10px auto; opacity: 0.5;">
+                    
+                    <h3 class="card-location-name">TƯ GIA NHÀ GÁI</h3>
+                    <p class="card-address">Ngõ 19A Xóm Bàn Nàn - Xã Cổ Đô - Thành Phố Hà Nội</p>
+                    
+                    <a href="https://maps.app.goo.gl/JuGXGH5eX91avNnE8" target="_blank" class="btn-gold">
+                        <span>📍</span> Bản đồ Nhà Gái
                     </a>
                 </div>
             </div>
         </section>
 
         <section class="section qr-section">
-            <h2 class="section-title reveal-item hidden-below" style="font-size: 2.5rem;">Hộp thư mừng cưới</h2>
-            <p class="reveal-item hidden-below" style="max-width: 600px; margin: auto; font-family: var(--serif-font); margin-bottom: 20px; padding: 0 10px;">Gửi gắm yêu thương tới chúng mình tại đây nhé!</p>
+            <h2 class="section-title reveal-item hidden-below" style="font-family: var(--script-font); font-size: 2.5rem; text-align: center; color: var(--accent);">Hộp thư mừng cưới</h2>
+            <p class="reveal-item hidden-below" style="max-width: 600px; margin: auto; text-align: center; font-family: var(--serif-font); margin-bottom: 20px; padding: 0 10px;">Gửi gắm yêu thương tới chúng mình tại đây nhé!</p>
             
             <div class="qr-grid">
                 <div class="qr-item reveal-item hidden-below">
-                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.4rem; margin-bottom: 10px;">Chú Rể</p>
+                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.4rem; margin-bottom: 10px; text-align: center;">Chú Rể</p>
                     <video class="qr-video" autoplay loop muted playsinline>
                         <source src="Video_Chú_Rể.mp4" type="video/mp4">
                     </video>
                 </div>
 
                 <div class="qr-item reveal-item hidden-below">
-                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.4rem; margin-bottom: 10px;">Cô Dâu</p>
+                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.4rem; margin-bottom: 10px; text-align: center;">Cô Dâu</p>
                     <video class="qr-video" autoplay loop muted playsinline>
                         <source src="Video_Cô_Dâu.mp4" type="video/mp4">
                     </video>
@@ -336,26 +372,22 @@
     <script>
         function openEnvelope() {
             const wrapper = document.getElementById('envelope-wrapper');
-            wrapper.style.transform = 'scale(1.5)'; // Giảm scale lại để đỡ lag trên mobile
+            wrapper.style.transform = 'scale(1.5)';
             wrapper.style.opacity = '0';
             
             setTimeout(() => {
                 wrapper.style.display = 'none';
                 const mainContent = document.getElementById('main-content');
                 mainContent.style.display = 'block';
-                // Trigger reflow
                 void mainContent.offsetWidth; 
                 mainContent.style.opacity = '1';
                 initSmartScrollReveal();
             }, 600);
             
             const music = document.getElementById('bgMusic');
-            music.currentTime = 0; // Play từ đầu hoặc đoạn điệp khúc tùy bạn
+            music.currentTime = 0;
             music.volume = 0.5;
-            // Quan trọng: Cần user interaction để play nhạc trên mobile
             music.play().catch(e => console.log("Trình duyệt chặn autoplay audio"));
-            
-            // Giảm số lượng lá rơi để đỡ nóng máy mobile
             setInterval(createLeaf, 600); 
         }
 
@@ -366,8 +398,7 @@
                         entry.target.classList.add('active');
                     }
                 });
-            }, { threshold: 0.1 }); // Giảm threshold để dễ trigger hơn trên màn hình dài
-
+            }, { threshold: 0.1 });
             document.querySelectorAll('.reveal-item').forEach(el => { observer.observe(el); });
         }
 
@@ -396,9 +427,8 @@
             leaf.innerHTML = icons[Math.floor(Math.random() * icons.length)];
             leaf.className = 'leaf';
             leaf.style.left = Math.random() * 100 + 'vw';
-            // Giới hạn độ bay ngang trên mobile
             leaf.style.setProperty('--x', (Math.random() * 10 - 5) + 'vw'); 
-            const size = Math.random() * 10 + 10; // Kích thước nhỏ hơn chút
+            const size = Math.random() * 10 + 10;
             leaf.style.fontSize = size + 'px';
             leaf.style.animationDuration = (Math.random() * 3 + 4) + 's';
             document.body.appendChild(leaf);
