@@ -2,9 +2,9 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Thiệp Hồng | Minh Tú & Đỗ Linh</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #A67B5B; 
@@ -12,8 +12,7 @@
             --bg: #FDFBF8; 
             --text: #4A4A4A;
             --serif-font: 'Cormorant Garamond', serif;
-            /* Font chữ mềm mại, hiện đại hơn */
-            --script-font: 'Dancing Script', cursive; 
+            --script-font: 'Pinyon Script', cursive; 
         }
 
         body, html {
@@ -21,26 +20,35 @@
             font-family: 'Quicksand', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            overflow-x: hidden;
+            overflow-x: hidden; /* Ngăn cuộn ngang */
             scroll-behavior: smooth;
             line-height: 1.6;
+            -webkit-tap-highlight-color: transparent; /* Bỏ highlight khi chạm trên mobile */
         }
 
-        h1, h2, h3 { font-weight: normal; }
+        h1, h2, h3 { font-weight: normal; margin: 0; }
+        img, video { max-width: 100%; height: auto; display: block; }
 
-        /* --- 1. MÀN HÌNH CHỜ --- */
+        /* --- 1. MÀN HÌNH CHỜ (ENVELOPE) --- */
         #envelope-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #2c1a1d 0%, #4a192c 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 1000; transition: opacity 0.8s ease-out, transform 0.8s ease-in;
+            padding: 20px; box-sizing: border-box;
         }
-        .envelope-container { position: relative; cursor: pointer; animation: float 3s ease-in-out infinite; }
+        .envelope-container { position: relative; cursor: pointer; animation: float 3s ease-in-out infinite; transform-origin: center; }
         .envelope {
             width: 300px; height: 200px; background: #c62828; position: relative;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-radius: 0 0 10px 10px;
             display: flex; justify-content: center; align-items: center;
         }
+        /* Tinh chỉnh bao thư nhỏ lại xíu trên màn hình bé */
+        @media (max-width: 350px) {
+            .envelope { width: 260px; height: 173px; }
+            .envelope::before { border-left-width: 130px; border-right-width: 130px; border-top-width: 95px; }
+        }
+
         .envelope::before {
             content: ''; position: absolute; top: 0; left: 0;
             border-left: 150px solid transparent; border-right: 150px solid transparent;
@@ -51,149 +59,170 @@
             background: #fff; width: 60px; height: 60px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center; font-size: 30px;
             animation: pulse-white 2s infinite; z-index: 5; color: var(--accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+        
         @keyframes pulse-white {
             0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
             70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
             100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .instruction { color: rgba(255,255,255,0.9); margin-top: 40px; font-size: 1.1rem; letter-spacing: 1px; animation: fadeIn 2s infinite alternate; }
+        .instruction { color: rgba(255,255,255,0.9); margin-top: 40px; font-size: 1.1rem; letter-spacing: 1px; animation: fadeIn 2s infinite alternate; text-align: center;}
 
         /* --- 2. NỘI DUNG CHÍNH --- */
-        #main-content { display: none; text-align: center; opacity: 0; transition: opacity 1s ease-in; }
+        #main-content { display: none; text-align: center; opacity: 0; transition: opacity 1s ease-in; width: 100%; overflow: hidden; }
 
         header {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), 
-                        url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1920') no-repeat center center;
-            background-size: cover; background-attachment: fixed; color: white;
+            min-height: 100vh; /* Fallback */
+            min-height: 100dvh; /* Mobile hiện đại */
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1080&q=80') no-repeat center center;
+            background-size: cover; 
+            background-attachment: fixed; /* Mặc định PC */
+            color: white; padding: 20px; box-sizing: border-box;
+        }
+
+        /* Fix lỗi background fixed trên iOS/Mobile */
+        @media (hover: none) and (pointer: coarse) {
+            header, .invitation-banner { background-attachment: scroll !important; }
         }
         
         h1 { 
             font-family: var(--script-font); 
-            font-size: 6rem; /* Kích thước vừa phải cho font Dancing Script */
-            margin: 15px 0; 
+            font-size: 7rem; 
+            margin: 10px 0; 
             text-shadow: 2px 2px 8px rgba(0,0,0,0.3); 
             animation: slideDown 1.5s ease-out;
-            line-height: 1.2;
-            font-weight: 700; /* Font này đậm hơn một chút cho rõ nét */
+            line-height: 1.1; font-weight: 400;
         }
         
-        /* CSS CHO TRÁI TIM Ở GIỮA */
         .heart-icon {
-            color: #ff6b6b;
-            display: inline-block;
-            font-size: 4rem; 
-            vertical-align: middle;
-            margin: 0 10px;
-            animation: heartBeat 1.2s infinite; 
+            color: #ff6b6b; display: inline-block; font-size: 4rem; 
+            vertical-align: middle; margin: 0 10px; animation: heartBeat 1.2s infinite; 
         }
 
         @keyframes heartBeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.3); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.3); }
-            70% { transform: scale(1); }
+            0% { transform: scale(1); } 14% { transform: scale(1.3); } 28% { transform: scale(1); }
+            42% { transform: scale(1.3); } 70% { transform: scale(1); }
         }
 
-        .wedding-title { font-family: var(--serif-font); letter-spacing: 3px; text-transform: uppercase; font-size: 1.2rem; animation: fadeIn 2s ease-in; }
+        .wedding-title { font-family: var(--serif-font); letter-spacing: 3px; text-transform: uppercase; font-size: 1.2rem; animation: fadeIn 2s ease-in; margin-top: 20px; }
         
-        .countdown-container { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
-        .time-box {
-            background: rgba(255,255,255,0.2); padding: 15px 25px; 
-            border: 1px solid rgba(255,255,255,0.4); border-radius: 8px; backdrop-filter: blur(10px);
+        /* Countdown Box */
+        .countdown-container { 
+            display: flex; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; 
         }
-        .time-box span { display: block; font-family: var(--serif-font); font-weight: 600; font-size: 2.5rem; }
-        .time-box label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .time-box {
+            background: rgba(255,255,255,0.2); padding: 10px 20px; min-width: 60px;
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 8px; backdrop-filter: blur(5px);
+        }
+        .time-box span { display: block; font-family: var(--serif-font); font-weight: 600; font-size: 2rem; line-height: 1;}
+        .time-box label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block;}
 
-        /* --- LOGIC HIỆU ỨNG THÔNG MINH --- */
-        .reveal-item { opacity: 0; transition: all 1s ease-out; }
-        .reveal-item.hidden-below { transform: translateY(70px); }
-        .reveal-item.hidden-above { transform: translateY(-70px); }
+        /* Hiệu ứng Scroll */
+        .reveal-item { opacity: 0; transition: all 0.8s ease-out; }
+        .reveal-item.hidden-below { transform: translateY(50px); }
+        .reveal-item.hidden-above { transform: translateY(-50px); }
         .reveal-item.active { opacity: 1; transform: translateY(0); }
 
-        .section { padding: 80px 20px; }
-        .section-title { font-family: var(--script-font); font-size: 3.5rem; color: var(--accent); margin-bottom: 30px; font-weight: 700; }
+        .section { padding: 60px 20px; }
+        .section-title { font-family: var(--script-font); font-size: 4rem; color: var(--accent); margin-bottom: 20px; font-weight: normal; line-height: 1.2;}
 
+        /* Banner Lời Mời */
         .invitation-banner {
-            position: relative; padding: 120px 20px;
-            background: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920') no-repeat center center;
+            position: relative; padding: 80px 20px;
+            background: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1080') no-repeat center center;
             background-size: cover; background-attachment: fixed; color: white; text-align: center;
         }
         .invitation-banner::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(44, 26, 29, 0.7); }
         .banner-content { position: relative; z-index: 2; max-width: 700px; margin: auto; }
-        .banner-content h3 { font-family: var(--serif-font); font-size: 2.5rem; font-style: italic; margin-bottom: 20px; }
-        .banner-content p { font-size: 1.3rem; line-height: 1.8; }
+        .banner-content h3 { font-family: var(--serif-font); font-size: 2.2rem; font-style: italic; margin-bottom: 15px; }
+        .banner-content p { font-size: 1.1rem; line-height: 1.7; }
 
-        /* --- CSS CHO ẢNH VÀ VIDEO --- */
-        .chibi-section { text-align: center; padding: 40px 20px; }
-        
+        /* Ảnh & Video */
+        .chibi-section { text-align: center; padding: 40px 20px; background: #fff;}
         .chibi-large { 
-            max-width: 450px; 
-            width: 100%;
-            height: auto; 
-            margin: 20px auto; 
-            display: block; 
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
-            border-radius: 15px;
-            object-fit: cover; 
+            max-width: 100%; width: 500px; height: auto; margin: 0 auto; 
+            border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        
-        /* CSS cho video cảm ơn cuối trang */
         .video-thank-you {
-            max-width: 450px; /* Kích thước vừa phải */
-            width: 100%;
-            height: auto;
-            margin: 0 auto 30px auto;
-            display: block;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
-            object-fit: cover;
+            max-width: 100%; width: 500px; height: auto; margin: 0 auto 20px auto;
+            border-radius: 15px; box-shadow: 0 5px 15px rgba(255,255,255,0.1);
         }
 
-        .location-box { background: white; padding: 40px; max-width: 800px; margin: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
-        .location-decor-img { position: absolute; top: 0; right: 0; width: 150px; opacity: 0.2; pointer-events: none; }
-        .map-btn { display: inline-block; margin-top: 25px; padding: 12px 35px; background: var(--accent); color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: all 0.3s; letter-spacing: 1px;}
-        .map-btn:hover { background: #c62828; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(217, 93, 93, 0.4); }
+        /* Location Box */
+        .location-box { 
+            background: white; padding: 30px 20px; max-width: 800px; margin: auto; 
+            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            position: relative; overflow: hidden; 
+        }
+        .location-decor-img { position: absolute; top: 0; right: 0; width: 100px; opacity: 0.15; pointer-events: none; }
+        .map-btn { 
+            display: inline-block; margin-top: 25px; padding: 12px 30px; 
+            background: var(--accent); color: white; text-decoration: none; 
+            border-radius: 50px; font-weight: bold; transition: all 0.3s; 
+            letter-spacing: 1px; font-size: 0.95rem; box-shadow: 0 5px 15px rgba(217, 93, 93, 0.3);
+        }
+        .map-btn:hover { background: #c62828; transform: translateY(-3px); }
 
-        /* --- CSS CHO PHẦN VIDEO CUỐI TRANG --- */
+        /* QR Section */
         .qr-section { background: #fff5f5; }
-        .qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 40px; max-width: 900px; margin: auto; text-align: center;}
-        
-        .qr-item { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 20px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
+        .qr-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; margin-top: 30px; max-width: 900px; margin-left: auto; margin-right: auto;
         }
-        
+        .qr-item { 
+            background: white; padding: 15px; border-radius: 20px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
+        }
         .qr-video {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            aspect-ratio: 9/16; 
-            object-fit: cover;
-            max-height: 500px;
-            border: 1px solid #eee;
+            width: 100%; border-radius: 12px; aspect-ratio: 9/16; 
+            object-fit: cover; max-height: 450px; border: 1px solid #f0f0f0;
         }
 
-        .leaf { position: fixed; top: -10%; z-index: 999; pointer-events: none; animation: fall linear infinite; opacity: 0.7; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); left: calc(var(--x) + 10%); } }
-        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* Lá rơi */
+        .leaf { position: fixed; top: -10%; z-index: 999; pointer-events: none; animation: fall linear infinite; opacity: 0.6; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); left: calc(var(--x) + 20px); } }
+        @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* --- MOBILE RESPONSIVE TWEAKS --- */
         @media (max-width: 768px) {
-            h1 { font-size: 4rem; }
-            .heart-icon { font-size: 2.5rem; }
-            .countdown-container { gap: 8px; }
-            .time-box { padding: 10px 15px; }
-            .chibi-large { max-width: 85%; }
-            .video-thank-you { max-width: 90%; }
+            /* Font size */
+            h1 { font-size: 4rem; margin-top: 10px; }
+            .heart-icon { font-size: 2.5rem; margin: 0 5px; }
+            .section-title { font-size: 3rem; }
+            
+            /* Countdown */
+            .countdown-container { gap: 10px; }
+            .time-box { padding: 8px 12px; min-width: 55px; }
+            .time-box span { font-size: 1.5rem; }
+            .time-box label { font-size: 0.65rem; }
+
+            /* Layout padding */
+            .section { padding: 50px 15px; }
+            .invitation-banner { padding: 60px 15px; }
+            .location-box { padding: 30px 15px; }
+            
+            /* Text adjustments */
+            .banner-content h3 { font-size: 1.8rem; }
+            .banner-content p { font-size: 1rem; text-align: justify; text-align-last: center; }
+            
+            /* QR */
+            .qr-grid { grid-template-columns: 1fr; max-width: 400px; } /* 1 cột trên mobile */
+            
+            /* Footer */
+            footer h2 { font-size: 3rem !important; }
+        }
+
+        @media (max-width: 400px) {
+            h1 { font-size: 3.2rem; }
+            .wedding-title { font-size: 0.9rem; letter-spacing: 2px; }
+            .time-box { min-width: 45px; padding: 8px 5px; }
+            .time-box span { font-size: 1.3rem; }
+            .map-btn { width: 80%; text-align: center; }
         }
     </style>
 </head>
@@ -205,14 +234,14 @@
                 <div class="heart-btn">❤️</div>
             </div>
         </div>
-        <p class="instruction">Bạn có một lời mời trân trọng...</p>
+        <p class="instruction">Chạm vào tim để mở thiệp</p>
     </div>
 
     <div id="main-content">
         <header>
             <p class="wedding-title">The Wedding Of</p>
             <h1>Minh Tú <span class="heart-icon">❤</span> Đỗ Linh</h1>
-            <p style="font-family: var(--serif-font); font-size: 1.5rem; font-style: italic; margin-top: 10px;">"Trăm năm tình viên mãn"</p>
+            <p style="font-family: var(--serif-font); font-size: 1.2rem; font-style: italic; margin-top: 5px;">"Trăm năm tình viên mãn"</p>
             
             <div class="countdown-container" id="countdown">
                 <div class="time-box"><span id="days">00</span><label>Ngày</label></div>
@@ -220,13 +249,14 @@
                 <div class="time-box"><span id="mins">00</span><label>Phút</label></div>
                 <div class="time-box"><span id="secs">00</span><label>Giây</label></div>
             </div>
-            <p style="font-size: 1.1rem; margin-top: 20px;">Chờ đón khoảnh khắc: 10:10 - 15/03/2026</p>
+            <p style="font-size: 1rem; margin-top: 15px; opacity: 0.9;">10:10 AM - 15/03/2026</p>
         </header>
 
         <section class="section chibi-section">
              <div class="reveal-item hidden-below">
-                <video class="chibi-large" autoplay loop muted playsinline>
+                <video class="chibi-large" autoplay loop muted playsinline poster="https://placehold.co/500x300/png?text=Loading...">
                     <source src="Video_Moi_cuoi.mp4" type="video/mp4">
+                    <img src="https://placehold.co/500x300/png?text=Anh+Cuoi" alt="Anh cuoi">
                 </video>
              </div>
         </section>
@@ -237,11 +267,11 @@
                 <div class="reveal-item hidden-below">
                     <p style="font-family: var(--serif-font);">
                         Gia đình chúng tôi và hai con<br>
-                        <strong style="font-size: 1.8rem; color: #ffcccb;">Minh Tú & Đỗ Linh</strong><br><br>
-                        Vô cùng vinh hạnh được đón tiếp Quý vị tới tham dự bữa tiệc rượu chung vui cùng gia đình trong ngày trọng đại này.
+                        <strong style="font-size: 1.6rem; color: #ffcccb; display: block; margin: 10px 0;">Minh Tú & Đỗ Linh</strong>
+                        Vô cùng vinh hạnh được đón tiếp Quý vị tới tham dự bữa tiệc rượu chung vui cùng gia đình.
                     </p>
                 </div>
-                <p class="reveal-item hidden-below" style="margin-top: 20px; font-size: 1.1rem; font-style: italic;">Sự hiện diện của Quý vị là niềm hạnh phúc và lời chúc phúc quý giá nhất dành cho chúng tôi.</p>
+                <p class="reveal-item hidden-below" style="margin-top: 20px; font-size: 1rem; font-style: italic; opacity: 0.9;">Sự hiện diện của Quý vị là niềm hạnh phúc lớn lao.</p>
             </div>
         </section>
 
@@ -249,39 +279,38 @@
             <div class="location-box reveal-item hidden-below">
                 <img src="https://cdn-icons-png.flaticon.com/512/2913/2913564.png" class="location-decor-img" alt="decor">
                 
-                <h2 class="section-title">Thời gian & Địa điểm</h2>
-                <div style="font-size: 1.15rem; line-height: 2;">
-                    <p style="font-family: var(--serif-font); font-size: 1.6rem; color: var(--accent); font-weight: bold; margin-bottom: 5px;">LỄ THÀNH HÔN</p>
-                    <p style="font-weight: bold;">10:10 AM | Chủ Nhật</p>
-                    <p style="font-size: 1.3rem;">Ngày 15 Tháng 03 Năm 2026</p> 
+                <h2 class="section-title">Lễ Thành Hôn</h2>
+                <div style="font-size: 1.1rem; line-height: 1.8;">
                     
-                    <hr style="width: 60px; border: 1px solid var(--primary); margin: 30px auto; opacity: 0.5;">
+                    <div style="background: #fff5f5; padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 20px;">
+                        <p style="font-weight: bold; color: var(--accent); margin-bottom: 0;">10:10 | Chủ Nhật</p>
+                        <p style="font-size: 1.2rem; font-weight: bold; margin-top: 0;">15 / 03 / 2026</p> 
+                    </div>
                     
-                    <p style="font-family: var(--serif-font); font-size: 1.4rem; color: var(--primary); font-weight: bold;">TẠI TƯ GIA NHÀ TRAI</p>
-                    <p>Xóm Văn Vũ - Xã Cổ Đô - Thành Phố Hà Nội</p>
-                    <p style="font-style: italic; font-size: 0.9rem; color: #666;">(Rất mong quý khách sắp xếp thời gian tới chung vui)</p>
+                    <p style="font-family: var(--serif-font); font-size: 1.3rem; color: var(--primary); font-weight: bold; text-transform: uppercase;">Tư Gia Nhà Trai</p>
+                    <p style="margin-bottom: 5px;">Xóm Văn Vũ - Xã Cổ Đô - TP. Hà Nội</p>
                     
-                    <a href="https://maps.app.goo.gl/vvKDMnk4YaXJU576A" target="_blank" class="map-btn">
-                        📍 Dẫn đường đến đám cưới
+                    <a href="https://maps.google.com/?q=Xóm+Văn+Vũ,+Xã+Cổ+Đô,+Hà+Nội" target="_blank" class="map-btn">
+                        📍 Dẫn đường Google Maps
                     </a>
                 </div>
             </div>
         </section>
 
         <section class="section qr-section">
-            <h2 class="section-title reveal-item hidden-below" style="font-size: 2.5rem;">Gửi Lời Chúc & Quà Mừng</h2>
-            <p class="reveal-item hidden-below" style="max-width: 600px; margin: auto; font-family: var(--serif-font); margin-bottom: 30px;">Nếu khoảng cách địa lý ngăn trở bạn tới tham dự, bạn vẫn có thể gửi gắm tình cảm tới chúng mình qua hộp thư này nhé!</p>
+            <h2 class="section-title reveal-item hidden-below" style="font-size: 2.5rem;">Hộp thư mừng cưới</h2>
+            <p class="reveal-item hidden-below" style="max-width: 600px; margin: auto; font-family: var(--serif-font); margin-bottom: 20px; padding: 0 10px;">Gửi gắm yêu thương tới chúng mình tại đây nhé!</p>
             
             <div class="qr-grid">
                 <div class="qr-item reveal-item hidden-below">
-                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.5rem; margin-bottom: 15px;">Chú Rể</p>
+                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.4rem; margin-bottom: 10px;">Chú Rể</p>
                     <video class="qr-video" autoplay loop muted playsinline>
                         <source src="Video_Chú_Rể.mp4" type="video/mp4">
                     </video>
                 </div>
 
                 <div class="qr-item reveal-item hidden-below">
-                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.5rem; margin-bottom: 15px;">Cô Dâu</p>
+                    <p style="font-weight: bold; color: var(--accent); font-family: var(--serif-font); font-size: 1.4rem; margin-bottom: 10px;">Cô Dâu</p>
                     <video class="qr-video" autoplay loop muted playsinline>
                         <source src="Video_Cô_Dâu.mp4" type="video/mp4">
                     </video>
@@ -289,13 +318,13 @@
             </div>
         </section>
 
-        <footer style="padding: 80px 20px; background: #2c1a1d; color: #e0e0e0; margin-top: 0px; text-align: center;">
+        <footer style="padding: 60px 20px; background: #2c1a1d; color: #e0e0e0; margin-top: 0px; text-align: center;">
             <div class="reveal-item hidden-below">
                 <video class="video-thank-you" autoplay loop muted playsinline>
                     <source src="Video_Cam_on.mp4" type="video/mp4">
                 </video>
-                <h2 style="font-family: var(--script-font); font-size: 4rem; color: var(--accent); margin: 0;">Thank You!</h2>
-                <p style="font-family: var(--serif-font); font-size: 1.2rem; margin-top: 20px;">Minh Tú & Đỗ Linh rất hạnh phúc khi có sự hiện diện của bạn.</p>
+                <h2 style="font-family: var(--script-font); font-size: 3.5rem; color: var(--accent); margin: 0;">Thank You!</h2>
+                <p style="font-family: var(--serif-font); font-size: 1.1rem; margin-top: 15px;">Minh Tú & Đỗ Linh</p>
             </div>
         </footer>
     </div>
@@ -307,23 +336,27 @@
     <script>
         function openEnvelope() {
             const wrapper = document.getElementById('envelope-wrapper');
-            wrapper.style.transform = 'scale(2)';
+            wrapper.style.transform = 'scale(1.5)'; // Giảm scale lại để đỡ lag trên mobile
             wrapper.style.opacity = '0';
             
             setTimeout(() => {
                 wrapper.style.display = 'none';
                 const mainContent = document.getElementById('main-content');
                 mainContent.style.display = 'block';
+                // Trigger reflow
                 void mainContent.offsetWidth; 
                 mainContent.style.opacity = '1';
                 initSmartScrollReveal();
-            }, 800);
+            }, 600);
             
             const music = document.getElementById('bgMusic');
-            music.currentTime = 213; 
+            music.currentTime = 0; // Play từ đầu hoặc đoạn điệp khúc tùy bạn
             music.volume = 0.5;
-            music.play().catch(e => console.log("Cần tương tác người dùng để phát nhạc"));
-            setInterval(createLeaf, 250);
+            // Quan trọng: Cần user interaction để play nhạc trên mobile
+            music.play().catch(e => console.log("Trình duyệt chặn autoplay audio"));
+            
+            // Giảm số lượng lá rơi để đỡ nóng máy mobile
+            setInterval(createLeaf, 600); 
         }
 
         function initSmartScrollReveal() {
@@ -331,18 +364,9 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                    } else {
-                        entry.target.classList.remove('active');
-                        if (entry.boundingClientRect.top > 0) {
-                            entry.target.classList.add('hidden-below');
-                            entry.target.classList.remove('hidden-above');
-                        } else {
-                            entry.target.classList.add('hidden-above');
-                            entry.target.classList.remove('hidden-below');
-                        }
                     }
                 });
-            }, { threshold: 0.15 });
+            }, { threshold: 0.1 }); // Giảm threshold để dễ trigger hơn trên màn hình dài
 
             document.querySelectorAll('.reveal-item').forEach(el => { observer.observe(el); });
         }
@@ -353,7 +377,7 @@
             const diff = targetDate - now;
             if (diff < 0) {
                 clearInterval(timer);
-                document.getElementById('countdown').innerHTML = "<h3 style='font-family: var(--script-font); font-size:3rem; color: var(--accent)'>Just Married! ❤️</h3>";
+                document.getElementById('countdown').innerHTML = "<h3 style='font-family: var(--script-font); font-size:2.5rem; color: var(--accent)'>Happy Wedding! ❤️</h3>";
                 return;
             }
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -366,14 +390,15 @@
             document.getElementById('secs').innerText = secs < 10 ? "0" + secs : secs;
         }, 1000);
 
-        const icons = ['🌸', '❤️', '✨', '🌿', '🤍'];
+        const icons = ['🌸', '❤️', '✨', '🌿'];
         function createLeaf() {
             const leaf = document.createElement('div');
             leaf.innerHTML = icons[Math.floor(Math.random() * icons.length)];
             leaf.className = 'leaf';
             leaf.style.left = Math.random() * 100 + 'vw';
-            leaf.style.setProperty('--x', (Math.random() * 20 - 10) + 'vw');
-            const size = Math.random() * 15 + 10;
+            // Giới hạn độ bay ngang trên mobile
+            leaf.style.setProperty('--x', (Math.random() * 10 - 5) + 'vw'); 
+            const size = Math.random() * 10 + 10; // Kích thước nhỏ hơn chút
             leaf.style.fontSize = size + 'px';
             leaf.style.animationDuration = (Math.random() * 3 + 4) + 's';
             document.body.appendChild(leaf);
