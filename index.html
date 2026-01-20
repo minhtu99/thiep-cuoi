@@ -41,7 +41,7 @@
         h1, h2, h3 { font-weight: normal; margin: 0; }
         img, video { max-width: 100%; height: auto; display: block; }
 
-        /* --- 1. MÀN HÌNH CHỜ (ĐÃ CHỈNH SỬA) --- */
+        /* --- 1. MÀN HÌNH CHỜ --- */
         #envelope-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             /* Background đỏ thẫm */
@@ -52,30 +52,26 @@
             overflow: hidden;
         }
 
-        /* Hiệu ứng hạt rơi lấp lánh (Sparkles) - ĐÃ SỬA */
+        /* Hiệu ứng hạt rơi lấp lánh (Sparkles) */
         .sparkle {
             position: absolute;
             background: white;
             border-radius: 50%;
             opacity: 0;
             pointer-events: none;
-            /* Tăng độ sáng của viền vàng */
             box-shadow: 0 0 12px 3px #FFD700; 
             animation: fall-sparkle linear infinite;
         }
         
-        /* Animation rơi từ trên xuống - ĐÃ SỬA */
         @keyframes fall-sparkle {
             0% { 
-                transform: translateY(-20vh); /* Bắt đầu từ trên cao ngoài màn hình */
+                transform: translateY(-20vh); 
                 opacity: 0; 
             }
-            10% {
-                opacity: 1; /* Hiện rõ nhanh chóng */
-            }
+            10% { opacity: 1; }
             100% { 
-                transform: translateY(120vh); /* Rơi xuống dưới đáy màn hình */
-                opacity: 0; /* Mờ dần khi chạm đáy */
+                transform: translateY(120vh); 
+                opacity: 0; 
             }
         }
 
@@ -112,17 +108,17 @@
             z-index: 20;
         }
 
-        /* Class kích hoạt mở nắp */
         .card-flap.is-opening {
             transform: rotateX(180deg);
-            opacity: 0.2; /* Mờ dần khi mở lên */
+            opacity: 0.2; 
         }
 
+        /* TRÁI TIM Ở TRÊN (NẮP) */
         .heart-circle-container {
             position: absolute;
             bottom: -30px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%); /* Căn giữa tuyệt đối */
             width: 60px; height: 60px;
             background: linear-gradient(135deg, #FFFCE0 0%, #E6C68D 100%);
             border-radius: 50%;
@@ -142,24 +138,52 @@
         /* Nội dung chữ trong thiệp */
         #card-text-content {
             transition: all 0.8s ease-out; 
-            padding: 0 25px;
+            padding: 0 10px; /* Giảm padding để có chỗ cho tên */
             position: relative;
+            width: 100%;
+            box-sizing: border-box;
         }
         
-        /* Class ẩn chữ khi bấm nút */
         .content-hidden {
             opacity: 0;
-            transform: translateY(20px); /* Chữ rơi xuống nhẹ khi biến mất */
+            transform: translateY(20px); 
             pointer-events: none;
         }
 
-        .couple-name-intro {
-            font-family: var(--serif-font);
-            font-size: 2.5rem;
-            color: var(--gold-text);
-            margin-top: 20px; margin-bottom: 10px;
-            line-height: 1.2;
+        /* --- CẤU TRÚC MỚI ĐỂ CĂN GIỮA TUYỆT ĐỐI --- */
+        .couple-name-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 25px; 
+            margin-bottom: 10px;
         }
+
+        /* Chia đều không gian 2 bên để ép tim vào giữa */
+        .name-side {
+            flex: 1; /* Chiếm hết khoảng trống có thể */
+            font-family: var(--serif-font);
+            font-size: 2.2rem;
+            color: var(--gold-text);
+            line-height: 1.2;
+            white-space: nowrap; /* Không cho xuống dòng */
+        }
+        
+        .name-left { text-align: right; } /* Tên trái căn phải */
+        .name-right { text-align: left; } /* Tên phải căn trái */
+
+        .heart-divider-center {
+            flex: 0 0 auto; /* Không co giãn */
+            margin: 0 12px;
+            font-size: 1.8rem;
+            color: var(--gold-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
         .divider-intro { width: 40px; height: 1px; background: var(--gold-text); margin: 15px auto; opacity: 0.5; }
         .date-intro { font-family: var(--serif-font); color: var(--gold-text); font-size: 1.2rem; letter-spacing: 1px; margin-bottom: 25px; }
         .invite-label { font-family: var(--sans-font); color: rgba(230, 198, 141, 0.7); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
@@ -177,7 +201,6 @@
         }
         .btn-open-card:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(191, 149, 63, 0.5); }
         
-        /* Hiệu ứng 3 chấm nhấp nháy */
         .dots-intro { 
             color: var(--gold-text); 
             margin-top: 15px; 
@@ -192,7 +215,7 @@
         }
 
 
-        /* --- 2. NỘI DUNG CHÍNH (GIỮ NGUYÊN) --- */
+        /* --- 2. NỘI DUNG CHÍNH --- */
         #main-content { display: none; text-align: center; opacity: 0; transition: opacity 1.5s ease-in; width: 100%; overflow: hidden; }
 
         header {
@@ -368,7 +391,12 @@
             </div>
             
             <div id="card-text-content">
-                <h2 class="couple-name-intro">Tú ❤ Linh</h2>
+                <div class="couple-name-container">
+                    <span class="name-side name-left">Minh Tú</span>
+                    <span class="heart-divider-center">❤</span>
+                    <span class="name-side name-right">Đỗ Linh</span>
+                </div>
+
                 <div class="divider-intro">✻</div>
                 <p class="date-intro">15 tháng 3, 2026</p>
                 
@@ -518,30 +546,19 @@
             
             container.appendChild(sparkle);
             
-            // Xóa sau khi chạy xong animation (tăng thời gian chờ lên để khớp với duration mới)
             setTimeout(() => {
                 sparkle.remove();
             }, 9000); 
         }
 
-        // Chạy tạo hạt ngay khi load
         let sparkleInterval = setInterval(createSparkles, 200);
 
-
-        // --- LOGIC MỞ THIỆP MỚI: Mở Nắp -> Ẩn Chữ -> Biến Mất ---
         function startOpeningSequence() {
-            // Dừng tạo hạt mới để tối ưu hiệu năng
             clearInterval(sparkleInterval);
-
-            // 1. Mở nắp phong bao (xoay nắp lên)
             document.getElementById('flap').classList.add('is-opening');
-
-            // 2. Đợi nắp mở (khoảng 800ms) rồi mới ẩn chữ
             setTimeout(() => {
                 document.getElementById('card-text-content').classList.add('content-hidden');
             }, 800);
-
-            // 3. Đợi chữ ẩn xong (thêm 800ms nữa) thì mới zoom out cả phong bì
             setTimeout(() => {
                 openEnvelopeMain();
             }, 1600);
@@ -549,7 +566,6 @@
 
         function openEnvelopeMain() {
             const wrapper = document.getElementById('envelope-wrapper');
-            // Hiệu ứng phóng to nhẹ và mờ dần
             wrapper.style.transform = 'scale(1.5)';
             wrapper.style.opacity = '0';
             
@@ -566,8 +582,6 @@
             music.currentTime = 0;
             music.volume = 0.5;
             music.play().catch(e => console.log("Trình duyệt chặn autoplay audio"));
-            
-            // Bắt đầu hiệu ứng lá rơi ở màn hình chính
             setInterval(createLeaf, 600); 
         }
 
@@ -582,7 +596,6 @@
             document.querySelectorAll('.reveal-item').forEach(el => { observer.observe(el); });
         }
 
-        // ĐẾM NGƯỢC ĐẾN NGÀY: 15/03/2026
         const targetDate = new Date("2026-03-15T10:10:00").getTime();
         const timer = setInterval(() => {
             const now = new Date().getTime();
