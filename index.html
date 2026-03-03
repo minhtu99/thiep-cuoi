@@ -223,7 +223,7 @@
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     /* Dùng % để kéo ảnh lên xuống tùy ý (vd: 20%) */
     background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                url('anh_cuoi.jpg') no-repeat center 20%;
+                url('anh_cuoi1.jpg') no-repeat center 20%;
     background-size: cover; 
     background-attachment: fixed;
     color: white; padding: 20px; box-sizing: border-box;
@@ -265,8 +265,8 @@
 
         .invitation-banner {
     position: relative; padding: 80px 20px;
-    /* Dùng đúng ảnh anh_cuoi.jpg và tọa độ center 20% giống hệt header */
-    background: url('anh_cuoi.jpg') no-repeat center 20%;
+
+    background: url('anh_moi1.jpg') no-repeat center 20%;
     background-size: cover; 
     background-attachment: fixed; 
     color: white; text-align: center;
@@ -404,7 +404,7 @@
                 </div>
 
                 <div class="divider-intro">✻</div>
-                <p class="date-intro">14 tháng 3, 2026</p>
+                <p class="date-intro">13 tháng 3, 2026</p>
                 
                 <p class="invite-label">Thân Mời</p>
                 
@@ -433,7 +433,7 @@
                 <div class="time-box"><span id="mins">00</span><label>Phút</label></div>
                 <div class="time-box"><span id="secs">00</span><label>Giây</label></div>
             </div>
-            <p style="font-size: 1rem; margin-top: 15px; opacity: 0.9;">16:30 AM - 14/03/2026</p>
+            <p style="font-size: 1rem; margin-top: 15px; opacity: 0.9;">16:30 AM - 13/03/2026</p>
         </header>
 
         <section class="section chibi-section">
@@ -468,7 +468,7 @@
                     <div class="card-decor-icon">⚜️</div> 
                     
                     <p class="card-type">LỄ THÀNH HÔN</p>
-                    <p class="card-time">9:30 | 15/03/2026</p>
+                    <p class="card-time">9:30 | 14/03/2026</p>
                     <hr style="width: 40px; border: 1px solid var(--gold-main); margin: 10px auto; opacity: 0.5;">
                     
                     <h3 class="card-location-name">TƯ GIA NHÀ TRAI</h3>
@@ -483,7 +483,7 @@
                     <div class="card-decor-icon">⚜️</div> 
                     
                     <p class="card-type">LỄ VU QUY</p>
-                    <p class="card-time">16:30 | 14/03/2026</p>
+                    <p class="card-time">16:30 | 13/03/2026</p>
                     <hr style="width: 40px; border: 1px solid var(--gold-main); margin: 10px auto; opacity: 0.5;">
                     
                     <h3 class="card-location-name">TƯ GIA NHÀ GÁI</h3>
@@ -602,7 +602,7 @@
             document.querySelectorAll('.reveal-item').forEach(el => { observer.observe(el); });
         }
 
-        const targetDate = new Date("2026-03-14T16:30:00").getTime();
+        const targetDate = new Date("2026-03-13T16:30:00").getTime();
         const timer = setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
